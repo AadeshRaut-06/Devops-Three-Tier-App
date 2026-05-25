@@ -1,11 +1,32 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f4f6f8;
+  background-color: #f1f5f9;
+}
+
+.container {
+  padding: 40px;
 }
 
 h1 {
   text-align: center;
-  margin-top: 40px;
-  color: #1e293b;
+  color: #0f172a;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  background-color: white;
+}
+
+th, td {
+  border: 1px solid #cbd5e1;
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background-color: #1e293b;
+  color: white;
 }
