@@ -6,6 +6,12 @@ function App() {
 
   const [servers, setServers] = useState([]);
 
+  const [formData, setFormData] = useState({
+    serverName: "",
+    ipAddress: "",
+    status: ""
+  });
+
   useEffect(() => {
     fetchServers();
   }, []);
@@ -15,15 +21,78 @@ function App() {
       const response = await axios.get("http://localhost:8080/servers");
       setServers(response.data);
     } catch (error) {
-      console.error("Error fetching servers", error);
+      console.error(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const addServer = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post("http://localhost:8080/servers", formData);
+
+      fetchServers();
+
+      setFormData({
+        serverName: "",
+        ipAddress: "",
+        status: ""
+      });
+
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
     <div className="container">
+
       <h1>Cloud Resource Management System</h1>
 
+      <form onSubmit={addServer}>
+
+        <input
+          type="text"
+          name="serverName"
+          placeholder="Server Name"
+          value={formData.serverName}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="ipAddress"
+          placeholder="IP Address"
+          value={formData.ipAddress}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="status"
+          placeholder="Status"
+          value={formData.status}
+          onChange={handleChange}
+          required
+        />
+
+        <button type="submit">
+          Add Server
+        </button>
+
+      </form>
+
       <table>
+
         <thead>
           <tr>
             <th>ID</th>
@@ -34,6 +103,7 @@ function App() {
         </thead>
 
         <tbody>
+
           {servers.map((server) => (
             <tr key={server.id}>
               <td>{server.id}</td>
@@ -42,8 +112,11 @@ function App() {
               <td>{server.status}</td>
             </tr>
           ))}
+
         </tbody>
+
       </table>
+
     </div>
   );
 }
