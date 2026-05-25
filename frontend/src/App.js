@@ -51,6 +51,18 @@ function App() {
     }
   };
 
+  const deleteServer = async (id) => {
+
+    try {
+      await axios.delete(`http://localhost:8080/servers/${id}`);
+
+      fetchServers();
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="container">
 
@@ -99,6 +111,7 @@ function App() {
             <th>Server Name</th>
             <th>IP Address</th>
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
 
@@ -110,6 +123,11 @@ function App() {
               <td>{server.serverName}</td>
               <td>{server.ipAddress}</td>
               <td>{server.status}</td>
+              <td>
+                <button onClick={() => deleteServer(server.id)}>
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
 

@@ -24,4 +24,9 @@ public class ServerController {
     public Server addServer(@RequestBody Server server) {
         return serverService.saveServer(server);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteServer(@PathVariable Long id) {
+       serverService.deleteServer(id);
+    }
 }
